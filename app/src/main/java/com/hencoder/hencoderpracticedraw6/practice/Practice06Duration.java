@@ -11,12 +11,18 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.hencoder.hencoderpracticedraw6.R;
+import com.hencoder.hencoderpracticedraw6.Utils;
 
+/**
+ * 属性动画持续时间
+ */
 public class Practice06Duration extends LinearLayout {
     SeekBar durationSb;
     TextView durationValueTv;
     Button animateBt;
     ImageView imageView;
+
+    private boolean animated;
 
     int duration = 300;
 
@@ -36,8 +42,8 @@ public class Practice06Duration extends LinearLayout {
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
 
-        durationSb = (SeekBar) findViewById(R.id.durationSb);
-        durationValueTv = (TextView) findViewById(R.id.durationValueTv);
+        durationSb = findViewById(R.id.durationSb);
+        durationValueTv = findViewById(R.id.durationValueTv);
         durationValueTv.setText(getContext().getString(R.string.ms_with_value, duration));
         durationSb.setMax(10);
         durationSb.setProgress(1);
@@ -59,13 +65,32 @@ public class Practice06Duration extends LinearLayout {
             }
         });
 
-        animateBt = (Button) findViewById(R.id.animateBt);
-        imageView = (ImageView) findViewById(R.id.imageView);
+        animateBt = findViewById(R.id.animateBt);
+        imageView = findViewById(R.id.imageView);
         animateBt.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 // TODO 在这里处理点击事件，执行动画。记得使用 `setDuration(duration)` 来设置动画的时长。
+                if (!animated) {
+                    imageView.animate()
+                            .translationX(Utils.dpToPixel(200))
+                            .setDuration(duration);
+                } else {
+                    imageView.animate()
+                            .translationX(Utils.dpToPixel(0))
+                            .setDuration(duration);
+                }
+
+                animated = !animated;
             }
         });
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
     }
 }

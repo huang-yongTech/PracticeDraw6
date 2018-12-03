@@ -9,10 +9,17 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.hencoder.hencoderpracticedraw6.R;
+import com.hencoder.hencoderpracticedraw6.Utils;
 
+/**
+ * 多个属性动画一起使用
+ */
 public class Practice05MultiProperties extends ConstraintLayout {
     Button animateBt;
     ImageView imageView;
+
+    private int multiCount = 2;
+    private int multiState = 0;
 
     public Practice05MultiProperties(Context context) {
         super(context);
@@ -30,8 +37,8 @@ public class Practice05MultiProperties extends ConstraintLayout {
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
 
-        animateBt = (Button) findViewById(R.id.animateBt);
-        imageView = (ImageView) findViewById(R.id.imageView);
+        animateBt = findViewById(R.id.animateBt);
+        imageView = findViewById(R.id.imageView);
         imageView.setScaleX(0);
         imageView.setScaleY(0);
         imageView.setAlpha(0f);
@@ -39,6 +46,27 @@ public class Practice05MultiProperties extends ConstraintLayout {
             @Override
             public void onClick(View v) {
                 // TODO 在这里处理点击事件，同时对多个属性做动画
+                switch (multiState) {
+                    case 0:
+                        imageView.animate().translationX(Utils.dpToPixel(200))
+                                .alpha(1)
+                                .scaleX(1)
+                                .scaleY(1)
+                                .rotation(360);
+                        break;
+                    case 1:
+                        imageView.animate().translationX(Utils.dpToPixel(0))
+                                .alpha(0)
+                                .scaleX(0)
+                                .scaleY(0)
+                                .rotation(0);
+                        break;
+                }
+
+                multiState++;
+                if (multiState == multiCount) {
+                    multiState = 0;
+                }
             }
         });
     }

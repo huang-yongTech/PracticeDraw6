@@ -10,9 +10,15 @@ import android.widget.RelativeLayout;
 
 import com.hencoder.hencoderpracticedraw6.R;
 
+/**
+ * 属性动画-alpha可见度
+ */
 public class Practice04Alpha extends RelativeLayout {
     Button animateBt;
     ImageView imageView;
+
+    private int alphaCount = 2;
+    private int alphaState = 0;
 
     public Practice04Alpha(Context context) {
         super(context);
@@ -30,13 +36,26 @@ public class Practice04Alpha extends RelativeLayout {
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
 
-        animateBt = (Button) findViewById(R.id.animateBt);
-        imageView = (ImageView) findViewById(R.id.imageView);
+        animateBt = findViewById(R.id.animateBt);
+        imageView = findViewById(R.id.imageView);
 
         animateBt.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(final View v) {
                 // TODO 在这里处理点击事件，通过 View.animate().alpha() 来改变 View 的透明度
+                switch (alphaState) {
+                    case 0:
+                        imageView.animate().alpha(0);
+                        break;
+                    case 1:
+                        imageView.animate().alpha(1);
+                        break;
+                }
+
+                alphaState++;
+                if (alphaState == alphaCount) {
+                    alphaState = 0;
+                }
             }
         });
     }

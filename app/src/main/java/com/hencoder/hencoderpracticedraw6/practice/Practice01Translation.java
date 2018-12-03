@@ -18,9 +18,15 @@ import com.hencoder.hencoderpracticedraw6.R;
 import static android.os.Build.VERSION.SDK_INT;
 import static com.hencoder.hencoderpracticedraw6.Utils.dpToPixel;
 
+/**
+ * 属性动画-xyz平移
+ */
 public class Practice01Translation extends RelativeLayout {
     Button animateBt;
     ImageView imageView;
+
+    private int translationCount = Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ? 6 : 4;
+    private int translateState = 0;
 
     public Practice01Translation(Context context) {
         super(context);
@@ -38,8 +44,8 @@ public class Practice01Translation extends RelativeLayout {
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
 
-        animateBt = (Button) findViewById(R.id.animateBt);
-        imageView = (ImageView) findViewById(R.id.imageView);
+        animateBt = findViewById(R.id.animateBt);
+        imageView = findViewById(R.id.imageView);
         if (SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
             // 给音乐图标加上合适的阴影
             imageView.setOutlineProvider(new MusicOutlineProvider());
@@ -49,6 +55,31 @@ public class Practice01Translation extends RelativeLayout {
             @Override
             public void onClick(final View v) {
                 // TODO 在这里处理点击事件，通过 View.animate().translationX/Y/Z() 来让 View 平移
+                switch (translateState) {
+                    case 0:
+                        imageView.animate().translationX(dpToPixel(150));
+                        break;
+                    case 1:
+                        imageView.animate().translationX(0);
+                        break;
+                    case 2:
+                        imageView.animate().translationY(dpToPixel(100));
+                        break;
+                    case 3:
+                        imageView.animate().translationY(0);
+                        break;
+                    case 4:
+                        imageView.animate().translationZ(dpToPixel(20));
+                        break;
+                    case 5:
+                        imageView.animate().translationZ(0);
+                        break;
+                }
+
+                translateState++;
+                if (translateState == translationCount) {
+                    translateState = 0;
+                }
             }
         });
     }

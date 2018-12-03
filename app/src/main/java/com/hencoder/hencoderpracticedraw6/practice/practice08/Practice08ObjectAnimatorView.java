@@ -53,6 +53,17 @@ public class Practice08ObjectAnimatorView extends View {
 
         paint.setColor(Color.WHITE);
         paint.setStyle(Paint.Style.FILL);
+        //centerY - (paint.ascent() + paint.descent()) / 2    计算绘制文字的起始竖直位置
         canvas.drawText((int) progress + "%", centerX, centerY - (paint.ascent() + paint.descent()) / 2, paint);
+    }
+
+    public float getProgress() {
+        return progress;
+    }
+
+    public void setProgress(float progress) {
+        this.progress = progress;
+        //该方法一定要加上
+        invalidate();
     }
 }
